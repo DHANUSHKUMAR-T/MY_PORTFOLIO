@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of DhanushKumar T, AI & Data Science Enthusiast">
+    <meta name="keywords" content="AI, Data Science, Machine Learning, Portfolio">
+    <meta name="author" content="DhanushKumar T">
+    <meta property="og:title" content="DhanushKumar T | AI & Data Science Portfolio">
+    <meta property="og:description" content="Portfolio showcasing AI and Data Science projects">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <title>DhanushKumar T | AI & Data Science Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0f0f1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(138, 43, 226, 0.3);
+            border-radius: 50%;
+            border-top-color: #8a2be2;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            cursor: none;
+            overflow-x: hidden;
+        }
+
+        .cursor-trail {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.8) 0%, rgba(138, 43, 226, 0) 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            filter: blur(1px);
+        }
+
+        .glow {
+            text-shadow: 0 0 10px var(--accent-light);
+        }
+
+        .glow-box {
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        .glow-hover:hover {
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.8);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(138, 43, 226, 0.8);
+            }
+
+            100% {
+                box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Tag Cloud Styles */
+        .skill-tag-cloud {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            margin: 1rem auto 0;
+            perspective: 1000px;
+        }
+
+        .skill-tag {
+            position: absolute;
+            color: #c084fc;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            background: rgba(138, 43, 226, 0.1);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            box-shadow: 0 0 10px rgba(138, 43, 226, 0.2);
+            transform-origin: center center;
+            transition: all 0.5s ease;
+            opacity: 0;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .skill-tag-cloud {
+                height: 250px;
+            }
+        }
+
+        .typewriter-container {
+            margin: 3.5rem auto 0;
+            text-align: center;
+            min-height: 6rem;
+            position: relative;
+        }
+
+        .typewriter-prefix {
+            color: #da07ff;
+            font-weight: 700;
+            font-size: 2.2rem;
+            text-shadow: 0 0 10px rgba(240, 171, 252, 0.7);
+            display: inline-block;
+        }
+
+        .typewriter-text {
+            color: #c084fc;
+            font-weight: 600;
+            font-size: 1.5rem;
+            display: inline-block;
+            text-shadow: 0 0 8px rgba(138, 43, 226, 0.5);
+        }
+
+        .typewriter-text::after {
+            content: "|>";
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Twinkling Stars */
+        .star {
+            position: fixed;
+            background-color: var(--star-color, white);
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+            opacity: 0;
+            z-index: -1;
+            /* Behind content */
+            pointer-events: none;
+            /* Click-through */
+        }
+
+        [data-theme="light"] {
+            --star-color: #4b5563;
+            /* A dark gray that will show on light background */
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+
+            50% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+        }
+
+        /* Certificates Grid */
+        .certificates-section .flex {
+            position: relative;
+            min-height: 3rem;
+            /* Ensure enough space for button */
+        }
+
+        .certificates-section {
+            padding: 2rem 0;
+            background: rgba(15, 15, 26, 0.7);
+        }
+
+        .certificates-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .certificate-item {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .certificate-change-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .certificate-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
+        }
+
+        .certificate-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .certificate-item:hover .certificate-img {
+            transform: scale(1.05);
+        }
+
+        .certificate-item:hover .certificate-change-btn {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .certificates-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+            }
+        }
+
+        /* Dark/Light Mode Variables */
+        :root {
+            --bg-primary: #0f0f1a;
+            --bg-secondary: #1a1a2e;
+            --text-primary: #e2e8f0;
+            --text-secondary: #cbd5e0;
+            --accent-color: #8a2be2;
+            --accent-light: #c084fc;
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #e2e8f0;
+            --text-primary: #1e293b;
+            --text-secondary: #334155;
+            --accent-color: #7c3aed;
+            --accent-light: #8b5cf6;
+        }
+
+        /* Back to Top Button */
+        #backToTop {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 3rem;
+            height: 3rem;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        #backToTop.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #backToTop:hover {
+            background-color: var(--accent-light);
+            transform: translateY(-3px);
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 4.5rem;
+            right: 0.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--accent-color);
+            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-toggle i {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    <!-- Header/Navigation -->
+    <header class="bg-black bg-opacity-80 backdrop-blur-sm fixed w-full z-10 glow-box">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-xl font-bold text-violet-500 glow">DhanushKumar T</a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#about" class="text-violet-300 hover:text-violet-500 hover:glow transition">About</a>
+                    <a href="#skills" class="text-violet-300 hover:text-violet-500 hover:glow transition">Skills</a>
+                    <a href="#experience"
+                        class="text-violet-300 hover:text-violet-500 hover:glow transition">Experience</a>
+                    <a href="#projects" class="text-violet-300 hover:text-violet-500 hover:glow transition">Projects</a>
+                </div>
+                <button class="md:hidden focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-6 bg-gradient-to-b from-black to-gray-900">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 text-white glow">DhanushKumar T</h1>
+            <h2 class="text-xl md:text-2xl text-violet-400 mb-6 glow">🤖 Artificial Intelligence & Data Science 📊
+                Enthusiast</h2>
+            <p class="max-w-2xl mx-auto text-lg mb-8 text-gray-300">🚀 Turning ideas into interactive and user-friendly
+                💡 digital experiences with Artificial Intelligence, ML, Data Science, and 🌐 Web Development.</p>
+            <div class="flex justify-center space-x-4">
+                <a href="#contact"
+                    class="bg-violet-600 text-white px-6 py-3 rounded-lg hover:bg-violet-700 transition glow-hover pulse">Contact
+                    Me</a>
+                <a href="#projects"
+                    class="border border-violet-500 text-violet-400 px-6 py-3 rounded-lg hover:bg-violet-900/30 transition glow-hover">View
+                    Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-6 bg-gray-900/50 backdrop-blur-sm">
+        <div class="container mx-auto max-w-4xl">
+            <h2 class="text-3xl font-bold text-center mb-12 text-violet-400 glow">About Me</h2>
+            <div class="flex flex-col md:flex-row items-center gap-8 glow-box p-8 rounded-xl">
+                <div class="md:w-1/3 flex justify-center">
+                    <div
+                        class="w-48 h-48 bg-gray-800 rounded-full overflow-hidden glow-hover border-2 border-violet-400/30">
+                        <img src="photo\my photo.webp" alt="DhanushKumar T" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="md:w-2/3">
+                    <p class="text-lg mb-4 text-gray-300">Hello, I'm 🤖 DhanushKumar T, a passionate AI & 📊 Data
+                        Science Enthusiast from 🇮🇳 India.</p>
+                    <p class="text-lg mb-4 text-gray-300">🎓 Currently pursuing B.Tech in AI & DS, I specialize in 🤖
+                        Machine Learning, 🌐 IoT, and 💻 Web Development. I love building innovative solutions with a
+                        mix of AI and ⚡ automation.</p>
+                    <p class="text-lg text-gray-300">🤝 Let's collaborate to elevate your 🌐 web presence and engage
+                        your audience with 🚀 cutting-edge design and ⚡ functionality.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="typewriter-container" id="typewriterContainer">
+        <span class="typewriter-prefix">I'm</span> <span class="typewriter-text" id="typewriter"></span>
+    </div>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 px-6 bg-gray-900/50 backdrop-blur-sm">
+        <div class="container mx-auto max-w-6xl">
+            <h2 class="text-3xl font-bold text-center mb-12 text-violet-400 glow">My Skills</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Back-End Skills -->
+                <div class="bg-gray-800/50 p-6 rounded-lg glow-box hover:glow-hover transition">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center text-violet-300">
+                        <i class="fas fa-server mr-2 text-violet-400 glow"></i> Back-End
+                    </h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fab fa-python mr-2 text-violet-400"></i> Python
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fab fa-java mr-2 text-violet-400"></i> Java
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-code mr-2 text-violet-400"></i> Django
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-flask mr-2 text-violet-400"></i> Flask
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Front-End Skills -->
+                <div class="bg-gray-800/50 p-6 rounded-lg glow-box hover:glow-hover transition">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center text-violet-300">
+                        <i class="fas fa-laptop-code mr-2 text-violet-400 glow"></i> Front-End
+                    </h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fab fa-html5 mr-2 text-violet-400"></i> HTML
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fab fa-css3-alt mr-2 text-violet-400"></i> CSS
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Database Skills -->
+                <div class="bg-gray-800/50 p-6 rounded-lg glow-box hover:glow-hover transition">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center text-violet-300">
+                        <i class="fas fa-database mr-2 text-violet-400 glow"></i> Database
+                    </h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-database mr-2 text-violet-400"></i> MySQL
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-database mr-2 text-violet-400"></i> SQL
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-leaf mr-2 text-violet-400"></i> MongoDB
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- AI & ML Skills -->
+                <div class="bg-gray-800/50 p-6 rounded-lg glow-box hover:glow-hover transition">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center text-violet-300">
+                        <i class="fas fa-brain mr-2 text-violet-400 glow"></i> AI & ML
+                    </h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-robot mr-2 text-violet-400"></i> PyTorch
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-robot mr-2 text-violet-400"></i> Transformers
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-robot mr-2 text-violet-400"></i> TensorFlow
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-eye mr-2 text-violet-400"></i> OpenCV
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-robot mr-2 text-violet-400"></i> Keras
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-book mr-2 text-violet-400"></i> Jupyter Notebook
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-chart-line mr-2 text-violet-400"></i> Scikit-Learn
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- IoT & Hardware -->
+                <div class="bg-gray-800/50 p-6 rounded-lg glow-box hover:glow-hover transition">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center text-violet-300">
+                        <i class="fas fa-microchip mr-2 text-violet-400 glow"></i> IoT & Hardware
+                    </h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-microchip mr-2 text-violet-400"></i> Arduino
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-wifi mr-2 text-violet-400"></i> ESP32
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-raspberry-pi mr-2 text-violet-400"></i> Raspberry Pi
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-cloud mr-2 text-violet-400"></i> Blynk
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-network-wired mr-2 text-violet-400"></i> IoT
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Tools -->
+                <div class="bg-gray-800/50 p-6 rounded-lg glow-box hover:glow-hover transition">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center text-violet-300">
+                        <i class="fas fa-tools mr-2 text-violet-400 glow"></i> Tools
+                    </h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fab fa-git-alt mr-2 text-violet-400"></i> Git
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fab fa-github mr-2 text-violet-400"></i> GitHub
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-code mr-2 text-violet-400"></i> VS Code
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-robot mr-2 text-violet-400"></i> Hugging Face
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-image mr-2 text-violet-400"></i> Picsart
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-paper-plane mr-2 text-violet-400"></i> Postman
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-palette mr-2 text-violet-400"></i> Canva
+                        </li>
+                        <li class="flex items-center text-gray-300 hover:text-violet-300 transition">
+                            <i class="fas fa-file-word mr-2 text-violet-400"></i> Microsoft Office
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Resume Download Section -->
+    <section class="py-10 px-6 bg-gray-900/50 backdrop-blur-sm">
+        <div class="container mx-auto max-w-4xl text-center">
+            <h2 class="text-2xl font-bold mb-6 text-violet-400 glow">My Professional Resume</h2>
+            <a href="https://drive.google.com/file/d/1k_SrTNf1ZvlyLDblF_hZSTJ59OoWFyXj/view?usp=drive_link"
+                class="inline-block bg-violet-600 hover:bg-violet-700 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 glow-hover"
+                download="DhanushKumar_Resume.pdf">
+                <i class="fas fa-file-pdf mr-2"></i> Download Resume (PDF)
+            </a>
+            <p class="mt-4 text-gray-300">Last updated: <span id="resumeDate">a Month</span></p>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20 px-6 bg-gray-900/50 backdrop-blur-sm">
+        <div class="container mx-auto max-w-4xl">
+            <h2 class="text-3xl font-bold text-center mb-12 text-violet-400 glow">Experience</h2>
+            <div class="space-y-8">
+                <div class="bg-gray-800/50 p-6 rounded-lg glow-box hover:glow-hover transition">
+                    <h3 class="text-xl font-semibold text-violet-300">🚀 Generative AI Virtual Internship</h3>
+                    <p class="text-violet-400">📌 Skillible | AICTE | 📅 July - August 2024</p>
+                    <ul class="list-disc list-inside mt-2 text-gray-300">
+                        <li class="hover:text-violet-300 transition">📖 Introduction to Generative AI</li>
+                        <li class="hover:text-violet-300 transition">🧠 Fundamentals of Generative AI</li>
+                        <li class="hover:text-violet-300 transition">🎯 Mastering Prompt Engineering</li>
+                        <li class="hover:text-violet-300 transition">⚡ Generative Tasks</li>
+                        <li class="hover:text-violet-300 transition">⚖️ Limitations and Biases in Gen AI Models</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-800/50 p-6 rounded-lg glow-box hover:glow-hover transition">
+                    <h3 class="text-xl font-semibold text-violet-300">📊 Data Science Virtual Internship</h3>
+                    <p class="text-violet-400">🏢 CODTECH IT SOLUTIONS PVT. LTD | 📅 January – March 2025</p>
+                    <ul class="list-disc list-inside mt-2 text-gray-300">
+                        <li class="hover:text-violet-300 transition">📅 Completed a 4-week Online Internship in Data
+                            Science</li>
+                        <li class="hover:text-violet-300 transition">💡 Worked on real-world projects and assignments
+                        </li>
+                        <li class="hover:text-violet-300 transition">🛠️ Gained hands-on experience in data analysis,
+                            model building, and problem-solving</li>
+                        <li class="hover:text-violet-300 transition">🤝 Collaborated with teams and received mentorship
+                            from industry experts</li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificates Section -->
+    <section class="certificates-section">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-8 text-violet-400 glow">Certificates</h2>
+            <div class="certificates-grid" id="certificatesGrid">
+                <!-- Certificates will be added dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 px-6 bg-gray-900/50 backdrop-blur-sm">
+        <div class="container mx-auto max-w-6xl">
+            <h2 class="text-3xl font-bold text-center mb-12 text-violet-400 glow">🚀 Internship Projects</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-800/50 p-6 rounded-lg glow-box hover:glow-hover transition">
+                    <h3 class="text-xl font-semibold mb-3 text-violet-300">Deep Learning Project</h3>
+                    <p class="text-gray-300 mb-4">🧠 Advanced Neural Network Implementation for Image Recognition.</p>
+                    <a href="https://github.com/DHANUSHKUMAR-T/DEEP_LEARNING-_PROJECT"
+                        class="text-violet-400 hover:text-violet-300 transition flex items-center" target="_blank">
+                        View on GitHub <i class="fab fa-github ml-2"></i>
+                    </a>
+                </div>
+                <div class="bg-gray-800/50 p-6 rounded-lg glow-box hover:glow-hover transition">
+                    <h3 class="text-xl font-semibold mb-3 text-violet-300">End-to-End Data Science Project</h3>
+                    <p class="text-gray-300 mb-4">🔄 Complete Data Pipeline from Collection to Deployment.</p>
+                    <a href="https://github.com/DHANUSHKUMAR-T/END-TO-END--DATA-SCIENCE-PROJECT"
+                        class="text-violet-400 hover:text-violet-300 transition flex items-center" target="_blank">
+                        View on GitHub <i class="fab fa-github ml-2"></i>
+                    </a>
+                </div>
+                <div class="bg-gray-800/50 p-6 rounded-lg glow-box hover:glow-hover transition">
+                    <h3 class="text-xl font-semibold mb-3 text-violet-300">Data Pipeline Development</h3>
+                    <p class="text-gray-300 mb-4">⚙️ ETL Processes and Data Pipeline Architecture.</p>
+                    <a href="https://github.com/DHANUSHKUMAR-T/DATA-PIPELINE-DEVELOPMENT"
+                        class="text-violet-400 hover:text-violet-300 transition flex items-center" target="_blank">
+                        View on GitHub <i class="fab fa-github ml-2"></i>
+                    </a>
+                </div>
+                <div class="bg-gray-800/50 p-6 rounded-lg glow-box hover:glow-hover transition">
+                    <h3 class="text-xl font-semibold mb-3 text-violet-300">Food Ordering Web</h3>
+                    <p class="text-gray-300 mb-4">🍽️ Full-Stack Food Ordering Web Application.</p>
+                    <a href="https://github.com/DHANUSHKUMAR-T/Example---1"
+                        class="text-violet-400 hover:text-violet-300 transition flex items-center" target="_blank">
+                        View on GitHub <i class="fab fa-github ml-2"></i>
+                    </a>
+                </div>
+                <div class="bg-gray-800/50 p-6 rounded-lg glow-box hover:glow-hover transition">
+                    <h3 class="text-xl font-semibold mb-3 text-violet-300">Optimization Model</h3>
+                    <p class="text-gray-300 mb-4">📈 Mathematical Optimization for Business Problems.</p>
+                    <a href="https://github.com/DHANUSHKUMAR-T/OPTIMIZATION_MODEL"
+                        class="text-violet-400 hover:text-violet-300 transition flex items-center" target="_blank">
+                        View on GitHub <i class="fab fa-github ml-2"></i>
+                    </a>
+                </div>
+                <div class="bg-gray-800/50 p-6 rounded-lg glow-box hover:glow-hover transition">
+                    <h3 class="text-xl font-semibold mb-3 text-violet-300">Climate Change Research</h3>
+                    <p class="text-gray-300 mb-4">🌍 Summarizing & Analyzing Research on Climate Change.</p>
+                    <a href="https://github.com/DHANUSHKUMAR-T/Summarizing-and-Analyzing-Research-on-the-Impact-of-Climate-Change-on-Biodiversity"
+                        class="text-violet-400 hover:text-violet-300 transition flex items-center" target="_blank">
+                        View on GitHub <i class="fab fa-github ml-2"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="https://github.com/DHANUSHKUMAR-T"
+                    class="inline-block bg-violet-600 text-white px-6 py-3 rounded-lg hover:bg-violet-700 transition glow-hover"
+                    target="_blank">
+                    Visit My GitHub For More Projects <i class="fab fa-github ml-2"></i>
+                </a>
+            </div>
+
+            <h2 class="text-3xl font-bold text-center my-12 text-violet-400 glow">🌐 Web Projects with 📊 Data Science,
+                🤖 AI, and 🧠 ML</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-800/50 p-6 rounded-lg glow-box hover:glow-hover transition">
+                    <h3 class="text-xl font-semibold mb-3 text-violet-300">Food Ordering Web</h3>
+                    <p class="text-gray-300 mb-4">🤖 Interactive 🍔 Food Ordering Web Platform – It provides a seamless menu selection, order placement, and payment process 🚀.</p>
+                    <a href="https://tdhanushkumar-food-order-dhanush.hf.space/"
+                        class="text-violet-400 hover:text-violet-300 transition flex items-center" target="_blank">
+                        View Website <i class="fas fa-external-link-alt ml-2"></i>
+                    </a>
+                </div>
+                <div class="bg-gray-800/50 p-6 rounded-lg glow-box hover:glow-hover transition">
+                    <h3 class="text-xl font-semibold mb-3 text-violet-300">IoT Smart Onion Storage</h3>
+                    <p class="text-gray-300 mb-4"> 🧅 Monitoring System for Onion Storage – It tracks temperature, humidity, air quality, and gas levels 🚀 to ensure optimal storage conditions.</p>
+                    <a href="https://its-me-g569-dhanushkumar-ts-projects.vercel.app/"
+                        class="text-violet-400 hover:text-violet-300 transition flex items-center" target="_blank">
+                        View Website <i class="fas fa-external-link-alt ml-2"></i>
+                    </a>
+                </div>
+                <div class="bg-gray-800/50 p-6 rounded-lg glow-box hover:glow-hover transition">
+                    <h3 class="text-xl font-semibold mb-3 text-violet-300">AI Food Maker</h3>
+                    <p class="text-gray-300 mb-4"> 🤖 AI Food Maker – It gives the ingredients, instructions, and a YouTube video 🚀 of the food. (AI-Powered)</p>
+                    <a href="https://tdhanushkumar-ai-food-maker.hf.space/"
+                        class="text-violet-400 hover:text-violet-300 transition flex items-center" target="_blank">
+                        View Website <i class="fas fa-external-link-alt ml-2"></i>
+                    </a>
+                </div>
+                <div class="bg-gray-800/50 p-6 rounded-lg glow-box hover:glow-hover transition">
+                    <h3 class="text-xl font-semibold mb-3 text-violet-300">Heart Disease Prediction Using ML & Data Science</h3>
+                    <p class="text-gray-300 mb-4">Data science application for 🩺 health analysis.</p>
+                    <a href="https://tdhanushkumar-task-3.hf.space"
+                        class="text-violet-400 hover:text-violet-300 transition flex items-center" target="_blank">
+                        View Website <i class="fas fa-external-link-alt ml-2"></i>
+                    </a>
+                </div>
+                <div class="bg-gray-800/50 p-6 rounded-lg glow-box hover:glow-hover transition">
+                    <h3 class="text-xl font-semibold mb-3 text-violet-300">Data Science Linear Programming</h3>
+                    <p class="text-gray-300 mb-4">Data science application for 📈 Linear Programming.</p>
+                    <a href="https://tdhanushkumar-linear-programming-task-four.hf.space/"
+                        class="text-violet-400 hover:text-violet-300 transition flex items-center" target="_blank">
+                        View Website <i class="fas fa-external-link-alt ml-2"></i>
+                    </a>
+                </div>
+                <div class="bg-gray-800/50 p-6 rounded-lg glow-box hover:glow-hover transition">
+                    <h3 class="text-xl font-semibold mb-3 text-violet-300">PWA (Progressive Web App) e-Commerce website
+                    </h3>
+                    <p class="text-gray-300 mb-4">"🛍️ Super Shop"–A PWA e-Commerce site with products, cart, & dark
+                        mode .</p>
+                    <a href="https://tdhanushkumar-pws.static.hf.space/index.html"
+                        class="text-violet-400 hover:text-violet-300 transition flex items-center" target="_blank">
+                        View Website <i class="fas fa-external-link-alt ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer/Contact Section -->
+    <footer id="contact" class="py-12 px-6 bg-black/80 backdrop-blur-sm">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-8 text-violet-400 glow">Let's Connect</h2>
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="https://github.com/DHANUSHKUMAR-T"
+                    class="text-2xl text-violet-300 hover:text-violet-500 hover:glow transition">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/tdhanushkumar/"
+                    class="text-2xl text-violet-300 hover:text-violet-500 hover:glow transition">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=t.dhanu2216@gmail.com"
+                    class="text-2xl text-violet-300 hover:text-violet-500 hover:glow transition">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="http://wa.me/+919043562216"
+                    class="text-2xl text-violet-300 hover:text-violet-500 hover:glow transition">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://huggingface.co/TDHANUSHKUMAR" target="_blank" rel="noopener noreferrer" class="skill">
+                    <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face"
+                        width="30" height="20" loading="lazy" class="hover:opacity-80 transition-opacity">
+                    <span class="sr-only">Hugging Face</span>
+                </a>
+            </div>
+            <p class="text-gray-300">&copy; 2025 DhanushKumar T. 🪧 Rights reserved. All content is protected 😊.</p>
+        </div>
+    </footer>
+
+    <button id="backToTop"
+        class="fixed bottom-8 right-8 bg-violet-600 text-white w-12 h-12 rounded-full flex items-center justify-center opacity-0 invisible transition-all duration-300 hover:bg-violet-700 glow-hover">
+        <i class="fas fa-arrow-up text-xl"></i>
+    </button>
+
+    <div id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <script>
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+
+        // Apply saved theme
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateThemeIcon();
+
+        themeToggle.addEventListener('click', () => {
+            const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon();
+        });
+
+        function updateThemeIcon() {
+            const theme = document.documentElement.getAttribute('data-theme');
+            themeToggle.innerHTML = `<i class="fas ${theme === 'dark' ? 'fa-sun' : 'fa-moon'}"></i>`;
+        }
+
+        // Back to Top Functionality
+        const backToTopButton = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        // Preload certificate images
+        function preloadImages() {
+            allCertificates.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        }
+
+        // Optimized certificate rotation
+        let rotationInterval;
+        function startCertificateRotation() {
+            // Clear existing interval if any
+            if (rotationInterval) clearInterval(rotationInterval);
+
+            // Initial display
+            displayCertificates();
+
+            // Start rotation with optimized timing
+            rotationInterval = setInterval(() => {
+                requestAnimationFrame(displayCertificates);
+            }, 8000);
+        }
+
+        // Initialize after DOM loads
+        document.addEventListener('DOMContentLoaded', () => {
+            preloadImages();
+            startCertificateRotation();
+        });
+        // Certificate images (replace with your actual certificate paths)
+        // Certificate images (add all your certificate paths)
+        const allCertificates = [
+            "photo/AI Appreciation.webp",
+            "photo/AI Aware.webp",
+            "photo/AI-first Software Engineering.webp",
+            "photo/AI&ML ISRO .webp",
+            "photo/Applied Generative AI Certification (main).webp",
+            "photo/AR AND VR.webp",
+            "photo/BigData.webp",
+            "photo/Data Analysis(Tableau).webp",
+            "photo/Data Science intern (CODTECH IT SOLUTIONS).webp",
+            "photo/Deep Learning.webp",
+            "photo/Edureka-Internship Certificate.webp",
+            "photo/Fundamentals of digital marketing.webp",
+            "photo/GenAI Job Simulation from BCG X.webp",
+            "photo/Generative AI (Internship).webp",
+            "photo/Generative models for developers.webp",
+            "photo/GUVI (Introduction to Data Engineering and Bigdata ).webp",
+            "photo/GUVI AI (participaion cerificate).webp",
+            "photo/internshala.webp",
+            "photo/Introduction Of IoT.webp",
+            "photo/Introduction to OpenAI GPT Models.webp",
+            "photo/KEC HACKATHON.webp",
+            "photo/Microsoft and LinkedIn(AI produtivity skills).webp",
+            "photo/NDLI Club1.webp",
+            "photo/NDLI Club2.webp",
+            "photo/NLP.webp",
+            "photo/OpenAI Generative Pre-trained Transformer 3 (GPT-3) for developers.webp",
+            "photo/openCV in python.webp",
+            "photo/POWER BI .webp",
+            "photo/Power BI.webp",
+            "photo/Principles of Generative AI Certifi cation.webp",
+            "photo/Pro Fun using Python - Science Graduates - Foundation.webp",
+            "photo/Pro Fundamentals using Python - Part 1.webp",
+            "photo/Pro Fundamentals using Python - Part 2.webp",
+            "photo/Programming In Java.webp",
+            "photo/Prompt Engineering.webp",
+            "photo/Python for beginner.webp",
+            "photo/python hackathon.webp",
+            "photo/RBI quiz.webp",
+            "photo/RBI STATE LEVEL.webp",
+            "photo/START PRO(ISRO).webp",
+            "photo/tcs ion(Communication skills).webp",
+            "photo/VISAI 2025.webp",
+            "photo/Offer letter (Data Science Internship).webp"
+        ];
+
+
+        // Function to get random certificates
+        function getRandomCertificates(count) {
+            const shuffled = [...allCertificates].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        // Display certificates grid
+        function displayCertificates() {
+            const grid = document.getElementById('certificatesGrid');
+            const certificatesToShow = getRandomCertificates(9); // Get 9 random certs
+
+            grid.innerHTML = ''; // Clear existing
+
+            // Create 3x3 grid
+            for (let i = 0; i < 9; i++) {
+                const certItem = document.createElement('div');
+                certItem.className = 'certificate-item';
+
+                const certImg = document.createElement('img');
+                certImg.className = 'certificate-img';
+                certImg.src = certificatesToShow[i % certificatesToShow.length];
+                certImg.alt = `Certificate ${i + 1}`;
+
+                certItem.appendChild(certImg);
+                grid.appendChild(certItem);
+            }
+        }
+
+        // Initialize certificates
+        displayCertificates();
+
+        // Auto-rotate every 5 seconds
+        setInterval(displayCertificates, 8000);
+        function createStars() {
+            const starCount = 300; // Increased number for higher density
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.width = `${Math.random() * 4 + 2}px`;
+                star.style.height = star.style.width;
+                star.style.left = `${Math.random() * 100}vw`;
+                star.style.top = `${Math.random() * 100}vh`;
+                star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                document.body.appendChild(star);
+            }
+        }
+
+        // Initialize stars and typing animation
+        createStars();
+
+        // Rest of typing animation code remains the same...
+        const roles = [
+            "an Artificial Intelligence Engineer",
+            "an IoT Developer",
+            "a Data Scientist",
+            "a Front-End Developer",
+            "a Machine Learning Specialist",
+            "a Web Developer"
+        ];
+
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typeSpeed = 100;
+        const typewriter = document.getElementById('typewriter');
+
+        function typeRole() {
+            const currentRole = roles[roleIndex];
+
+            if (isDeleting) {
+                typewriter.textContent = currentRole.substring(0, charIndex - 1);
+                charIndex--;
+                typeSpeed = 50;
+            } else {
+                typewriter.textContent = currentRole.substring(0, charIndex + 1);
+                charIndex++;
+                typeSpeed = 100;
+            }
+
+            if (!isDeleting && charIndex === currentRole.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % roles.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeRole, typeSpeed);
+        }
+
+        setTimeout(typeRole, 1000);
+        // Loading spinner
+        window.addEventListener('load', function () {
+            const loading = document.getElementById('loading');
+            loading.style.opacity = '0';
+            setTimeout(() => {
+                loading.style.display = 'none';
+            }, 500);
+        });
+
+        // Cursor trail effect
+        document.addEventListener('DOMContentLoaded', () => {
+            const cursor = document.createElement('div');
+            cursor.classList.add('cursor-trail');
+            document.body.appendChild(cursor);
+
+            const colors = ['#8a2be2', '#9400d3', '#9932cc', '#ba55d3'];
+            let trailElements = [];
+            const trailLength = 10;
+
+            for (let i = 0; i < trailLength; i++) {
+                let trail = document.createElement('div');
+                trail.classList.add('cursor-trail');
+                trail.style.width = `${30 - i}px`;
+                trail.style.height = `${30 - i}px`;
+                trail.style.opacity = `${1 - (i * 0.1)}`;
+                trail.style.background = `radial-gradient(circle, ${colors[i % colors.length]} 0%, rgba(138,43,226,0) 70%)`;
+                document.body.appendChild(trail);
+                trailElements.push(trail);
+            }
+
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = `${e.clientX}px`;
+                cursor.style.top = `${e.clientY}px`;
+
+                trailElements.forEach((trail, index) => {
+                    setTimeout(() => {
+                        trail.style.left = `${e.clientX}px`;
+                        trail.style.top = `${e.clientY}px`;
+                    }, index * 50);
+                });
+            });
+
+            // Mobile menu toggle
+            const menuButton = document.querySelector('.md\\:hidden');
+            const navLinks = document.querySelector('.hidden.md\\:flex');
+
+            menuButton.addEventListener('click', () => {
+                navLinks.classList.toggle('hidden');
+            });
+        });
+
+
+    </script>
+</body>
+
+</html>
